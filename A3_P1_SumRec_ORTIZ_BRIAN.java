@@ -1,6 +1,6 @@
-public class A3_P1_SumRec_LASTNAME_FIRSTNAME { 
+public class A3_P1_SumRec_ORTIZ_BRIAN {
 
-   public static String name = "LASTNAME_FIRSTNAME";
+   public static String name = "ORTIZ_BRIAN";
    
 
    public static double sumRec(double [] A, int low, int high)   {
@@ -15,7 +15,6 @@ public class A3_P1_SumRec_LASTNAME_FIRSTNAME {
        double rightSum = sumRec(A, mid + 1, high);
 
        return leftSum + rightSum;
-
 
    }
    
