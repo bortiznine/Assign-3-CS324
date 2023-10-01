@@ -86,23 +86,70 @@ public class A3_P56_Sort_LASTNAME_FIRSTNAME {
 
    // Partition elements around A[low]
 
-//   public static int partition(int [] A, int low, int high)   {
-//
-//
-//
-//
-//
-//   }
-//
-//
-//
-//   public static int quickSort(int [] A, int low, int high)  {
-//
-//
-//
-//
-//
-//   }
+   public static int partition(int [] A, int low, int high)   {
+
+      int pivotValue = A[low]; // Choose the first element as the pivot
+
+      int left = low + 1; // Start from the element just after the pivot
+      int right = high;
+
+      int comparisons = 0; // Initialize the comparison count
+
+      while (true) {
+         // Move left while the current element is smaller than the pivot
+         while (left <= right && A[left] <= pivotValue) {
+            left++;
+            comparisons++;
+         }
+
+         // Move right while the current element is greater than the pivot
+         while (left <= right && A[right] > pivotValue) {
+            right--;
+            comparisons++;
+         }
+
+         // If left and right have crossed, we are done
+         if (left <= right) {
+            // Swap A[left] and A[right]
+            int temp = A[left];
+            A[left] = A[right];
+            A[right] = temp;
+         } else {
+            break;
+         }
+      }
+
+      // Swap the pivot element (A[low]) with A[right]
+      int temp = A[low];
+      A[low] = A[right];
+      A[right] = temp;
+
+      // Return the index of the pivot element
+      return right;
+
+   }
+
+
+
+   public static int quickSort(int [] A, int low, int high)  {
+      if (low < high) {
+         int comparisons = 0; // Initialize the comparison count
+
+         int partitionIndex = partition(A, low, high);
+         comparisons += partitionIndex - low; // Add comparisons made in the left partition
+         comparisons += high - partitionIndex; // Add comparisons made in the right partition
+
+         int leftComparisons = quickSort(A, low, partitionIndex - 1);
+         int rightComparisons = quickSort(A, partitionIndex + 1, high);
+
+         // Total comparisons made in this call
+         return comparisons + leftComparisons + rightComparisons;
+      } else {
+         // Base case: Array with 0 or 1 element, no comparisons needed
+         return 0;
+      }
+
+   }
 
 
 
