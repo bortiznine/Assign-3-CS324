@@ -1,11 +1,11 @@
 // Put your answer to problem 6c below:
 
-// Answer to Problem 6c:  ________________________
+// Answer to Problem 6c:  n(n - 1)/2
 
 
-public class A3_P56_Sort_LASTNAME_FIRSTNAME {
+public class A3_P56_Sort_ORTIZ_BRIAN {
 
-   public static String name = "LASTNAME_FIRSTNAME";
+   public static String name = "ORTIZ_BRIAN";
 
 
    // === mergeRec ===================================================
@@ -87,45 +87,23 @@ public class A3_P56_Sort_LASTNAME_FIRSTNAME {
    // Partition elements around A[low]
 
    public static int partition(int [] A, int low, int high)   {
+      int pivotValue = A[low];
+      int pivotIndex = low;
 
-      int pivotValue = A[low]; // Choose the first element as the pivot
-
-      int left = low + 1; // Start from the element just after the pivot
-      int right = high;
-
-      int comparisons = 0; // Initialize the comparison count
-
-      while (true) {
-         // Move left while the current element is smaller than the pivot
-         while (left <= right && A[left] <= pivotValue) {
-            left++;
-            comparisons++;
-         }
-
-         // Move right while the current element is greater than the pivot
-         while (left <= right && A[right] > pivotValue) {
-            right--;
-            comparisons++;
-         }
-
-         // If left and right have crossed, we are done
-         if (left <= right) {
-            // Swap A[left] and A[right]
-            int temp = A[left];
-            A[left] = A[right];
-            A[right] = temp;
-         } else {
-            break;
+      for (int i = low + 1; i <= high; i++) {
+         if (A[i] < pivotValue) {
+            int temp = A[i];
+            A[i] = A[pivotIndex + 1];
+            A[pivotIndex + 1] = temp;
+            pivotIndex++;
          }
       }
 
-      // Swap the pivot element (A[low]) with A[right]
       int temp = A[low];
-      A[low] = A[right];
-      A[right] = temp;
+      A[low] = A[pivotIndex];
+      A[pivotIndex] = temp;
 
-      // Return the index of the pivot element
-      return right;
+      return pivotIndex;
 
    }
 
@@ -133,19 +111,17 @@ public class A3_P56_Sort_LASTNAME_FIRSTNAME {
 
    public static int quickSort(int [] A, int low, int high)  {
       if (low < high) {
-         int comparisons = 0; // Initialize the comparison count
+         int comparisons = 0;
 
          int partitionIndex = partition(A, low, high);
-         comparisons += partitionIndex - low; // Add comparisons made in the left partition
-         comparisons += high - partitionIndex; // Add comparisons made in the right partition
+         comparisons += partitionIndex - low + 1;
+         comparisons += high - partitionIndex;
 
          int leftComparisons = quickSort(A, low, partitionIndex - 1);
          int rightComparisons = quickSort(A, partitionIndex + 1, high);
 
-         // Total comparisons made in this call
          return comparisons + leftComparisons + rightComparisons;
       } else {
-         // Base case: Array with 0 or 1 element, no comparisons needed
          return 0;
       }
 
